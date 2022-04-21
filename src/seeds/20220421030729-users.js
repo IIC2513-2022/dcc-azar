@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const usersArray = [];
     usersArray.push({
-      firstname: 'John',
+      firstName: 'John',
       lastName: 'Doe',
       username: 'johndoe',
       age: 25,
@@ -12,7 +12,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      firstname: 'Jane',
+      firstName: 'Jane',
       lastName: 'Doe',
       username: 'janedoe',
       age: 25,
@@ -20,7 +20,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      firstname: 'Jack',
+      firstName: 'Jack',
       lastName: 'Doe',
       username: 'jackdoe',
       age: 25,
@@ -28,7 +28,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      firstname: 'Jill',
+      firstName: 'Jill',
       lastName: 'Doe',
       username: 'jilldoe',
       age: 25,
@@ -36,6 +36,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+    return queryInterface.bulkInsert('users', usersArray);
   },
 
   down: async (queryInterface, Sequelize) => {
