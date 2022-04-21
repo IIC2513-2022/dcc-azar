@@ -9,7 +9,8 @@ router.post('/', async (ctx) => {
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
-    ctx.body = { error };
+    const errorMessage = error.errors.map(e => e.message);
+    ctx.body = errorMessage;
     ctx.status = 400;
   }
 });
