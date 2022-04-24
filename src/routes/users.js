@@ -2,6 +2,14 @@ const KoaRouter = require('koa-router');
 
 const router = new KoaRouter();
 
+// http://localhost:3000/users/ (se obtienen todos los usuarios)
+router.get('/', async (ctx) => {
+  const users = await ctx.orm.user.findAll();
+  ctx.body = users;
+  ctx.status = 200;
+});
+
+// http://localhost:3000/users/ (se agrega un usuario)
 router.post('/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
@@ -15,10 +23,18 @@ router.post('/', async (ctx) => {
   }
 });
 
-router.get('/', async (ctx) => {
-  const users = await ctx.orm.user.findAll();
-  ctx.body = users;
-  ctx.status = 200;
+// http://localhost:3000/users/id (se elimina el usuario con un id especifico)
+router.delete('/:id', async (ctx) => {
+  // const { userId } = ctx.params;
+  const userId = ctx.params.id;
+  try {
+    const user = await ctx.orm.user.findOne({ where: { id: userId } });
+    await user.destroy();
+    ctx.status = 200;
+  } catch (ValidationError) {
+    ctx.throw(400);
+    ctx.body = ValidationError;
+  }
 });
 
 module.exports = router;
