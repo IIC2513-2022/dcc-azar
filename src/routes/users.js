@@ -9,6 +9,16 @@ router.get('/', async (ctx) => {
   ctx.status = 200;
 });
 
+
+// http://localhost:3000/users/id (se obtienen un usuario)
+router.get('/:id', async (ctx) => {
+  const userId = ctx.params.id;
+  const user = await ctx.orm.user.findOne({ where: { id: userId } });
+  ctx.body = user;
+  ctx.status = 200;
+});
+
+
 // http://localhost:3000/users/ (se agrega un usuario)
 router.post('/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
