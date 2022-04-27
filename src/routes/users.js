@@ -22,8 +22,12 @@ router.get('/:id', async (ctx) => {
 // http://localhost:3000/users/ (se agrega un usuario)
 router.post('/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
+  console.log(ctx.request.body);
+  console.log(typeof(ctx.request.body))
   try {
+    console.log("EMBECES");
     await user.save({ fields: ['firstName', 'lastName', 'username', 'age', 'password'] });
+    console.log("DESPUES");
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
