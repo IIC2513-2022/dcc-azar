@@ -9,7 +9,6 @@ router.get('/', async (ctx) => {
   ctx.status = 200;
 });
 
-
 // http://localhost:3000/users/id (se obtienen un usuario)
 router.get('/:id', async (ctx) => {
   const userId = ctx.params.id;
@@ -18,20 +17,15 @@ router.get('/:id', async (ctx) => {
   ctx.status = 200;
 });
 
-
 // http://localhost:3000/users/ (se agrega un usuario)
 router.post('/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
-  console.log(ctx.request.body);
-  console.log(typeof(ctx.request.body))
   try {
-    console.log("EMBECES");
     await user.save({ fields: ['firstName', 'lastName', 'username', 'age', 'password'] });
-    console.log("DESPUES");
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
-    const errorMessage = error.errors.map(e => e.message);
+    const errorMessage = error.errors.map((e) => e.message);
     ctx.body = errorMessage;
     ctx.status = 400;
   }
