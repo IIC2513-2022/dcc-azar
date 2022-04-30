@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.waitingRoom);
+      this.hasMany(models.waitingRoom,
+        {
+          foreignKey: {
+            name: 'creatorId',
+            allowNull: false,
+          },
+          as: 'creator',
+          onDelete: 'CASCADE',
+        });
     }
   }
   user.init({

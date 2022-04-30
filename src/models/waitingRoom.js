@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.user, {
         foreignKey: 'creatorId',
-        // as: 'creator',
+        as: 'creator',
+        allowNull: false,
       });
       // define association here
     }

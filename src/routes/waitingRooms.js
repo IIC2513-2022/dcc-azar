@@ -24,7 +24,6 @@ router.get('/:id', async (ctx) => {
 // create
 router.post('/', async (ctx) => {
   const waitingRoom = await ctx.orm.waitingRoom.build(ctx.request.body);
-  console.log(waitingRoom);
   try {
     await waitingRoom.save({ fields: ['name', 'creatorId', 'status'] });
     ctx.body = waitingRoom;
