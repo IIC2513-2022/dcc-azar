@@ -1,6 +1,6 @@
 const path = require('path');
 const Koa = require('koa');
-const cors = require('@koa/cors')
+const cors = require('@koa/cors');
 const koaBody = require('koa-body');
 const koaLogger = require('koa-logger');
 const koaFlashMessage = require('koa-flash-message').default;
@@ -17,7 +17,7 @@ const orm = require('./models');
 const app = new Koa();
 
 app.use(cors());
-app.use(cors({origin: process.env.ORIGIN || 'http://localhost:8000'}));
+app.use(cors({ origin: process.env.ORIGIN || 'http://localhost:8000' }));
 
 const developmentMode = app.env === 'development';
 const testMode = app.env === 'test';
