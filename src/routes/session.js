@@ -22,4 +22,9 @@ router.post('session.create', '/', async (ctx) => {
     }
   });
 
+router.delete('session.destroy', '/', async (ctx) => {
+    // se elimina la sesión
+    ctx.session = null;
+    ctx.status = 200;
+  });
   module.exports = router;
