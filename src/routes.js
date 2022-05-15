@@ -13,7 +13,7 @@ const router = new KoaRouter();
 //router.use('/hello', hello.routes());
 
 /*Unprotected routes*/
-router.use('/sessions', sessions.routes());
+router.use('/session', sessions.routes());
 /*Protected routes*/
 router.use('/users', users.routes());
 router.use(isAuthenticated);

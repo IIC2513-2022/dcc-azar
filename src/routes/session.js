@@ -5,11 +5,11 @@ const router = new KoaRouter();
 // endpoint para crear la sesión 
 router.post('session.create', '/', async (ctx) => {
     // obtiene email y password del cuerpo de la request
-    const { email, password } = ctx.request.body;
+    const { username, password } = ctx.request.body;
     // obtiene al usuario con ese email
-    const user = await ctx.orm.user.findOne({ where: { email } });
+    const user = await ctx.orm.user.findOne({ where: { username } });
     // si el usuario existe y la contraseña es correcta
-    const authenticated = (user && await user.checkPassword(password));
+    const authenticated = (user && await user.password == password);
     if (authenticated) {
     // se le asigna a session el id del usuario
       ctx.session.currentUserId = user.id;
