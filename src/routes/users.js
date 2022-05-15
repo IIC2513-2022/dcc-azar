@@ -1,6 +1,23 @@
 const KoaRouter = require('koa-router');
+const {isAuthenticated} = require('../middlewares/auth');
 
 const router = new KoaRouter();
+
+// http://localhost:3000/users/ (se agrega un usuario)
+router.post('/', async (ctx) => {
+  const user = ctx.orm.user.build(ctx.request.body);
+  try {
+    await user.save({ fields: ['firstName', 'lastName', 'username', 'age', 'password'] });
+    ctx.body = user;
+    ctx.status = 201;
+  } catch (error) {
+    const errorMessage = error.errors.map((e) => e.message);
+    ctx.body = errorMessage;
+    ctx.status = 400;
+  }
+});
+
+router.use(isAuthenticated);
 
 // http://localhost:3000/users/ (se obtienen todos los usuarios)
 router.get('/', async (ctx) => {
@@ -15,20 +32,6 @@ router.get('/:id', async (ctx) => {
   const user = await ctx.orm.user.findOne({ where: { id: userId } });
   ctx.body = user;
   ctx.status = 200;
-});
-
-// http://localhost:3000/users/ (se agrega un usuario)
-router.post('/', async (ctx) => {
-  const user = ctx.orm.user.build(ctx.request.body);
-  try {
-    await user.save({ fields: ['firstName', 'lastName', 'username', 'age', 'password'] });
-    ctx.body = user;
-    ctx.status = 201;
-  } catch (error) {
-    const errorMessage = error.errors.map((e) => e.message);
-    ctx.body = errorMessage;
-    ctx.status = 400;
-  }
 });
 
 // http://localhost:3000/users/id (se elimina el usuario con un id especifico)
