@@ -6,7 +6,7 @@ const router = new KoaRouter();
 function generateToken(user){
   return new Promise((resolve, reject) =>{
       jwtgenerator.sign(
-          { sub: user.id, role:user.role, name:user.username, age:user.age },
+          { sub: user.id, name:user.username, age:user.age },
           process.env.JWT_SECRET,
           {expiresIn: '1h'},
           (err, tokenResult) => (err ? reject(err) : resolve(tokenResult))
