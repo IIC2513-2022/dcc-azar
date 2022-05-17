@@ -2,6 +2,7 @@
 const isAuthenticated = async (ctx, next) => {
     if (ctx.session.currentUserId) {
         //ctx.state.currentUser = await ctx.orm.user.findByPk(ctx.session.currentUserId);
+        console.log(ctx.state.authData);
         await next();
     } else {
         const error = 'User is not logged in';
