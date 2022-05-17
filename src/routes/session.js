@@ -17,7 +17,6 @@ function generateToken(user){
 
 // endpoint para crear la sesión, login
 router.post('session.create', '/', async (ctx) => {
-    console.log("entra a post de session")
     const { username, password } = ctx.request.body;
     const user = await ctx.orm.user.findOne({ where: { username } });
     const authenticated = (user && user.password == password);
