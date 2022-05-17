@@ -6,7 +6,7 @@ const router = new KoaRouter();
 function generateToken(user){
   return new Promise((resolve, reject) =>{
       jwtgenerator.sign(
-          { sub: user.id },
+          { sub: user.id, role:user.role, name:user.username, age:user.age },
           process.env.JWT_SECRET,
           {expiresIn: '1h'},
           (err, tokenResult) => (err ? reject(err) : resolve(tokenResult))
@@ -20,18 +20,19 @@ router.post('session.create', '/', async (ctx) => {
     const { username, password } = ctx.request.body;
     const user = await ctx.orm.user.findOne({ where: { username } });
     const authenticated = (user && user.password == password);
+    const admin = (user && user.role == 'admin');
     if (authenticated) {
-      try {
+      try{
         ctx.session.currentUserId = user.id;
         const token = await generateToken(user);
         ctx.body = {
             access_token: token,
             token_type: 'Bearer',
         };
-        ctx.status = 200; 
-      } catch (error) {
-        ctx.throw(500);
-    }
+        ctx.status = 200;
+      } catch(err){
+        ctx.body = err;
+      }
     } else {
       const error = user ? 'Wrong password' : 'The username is not registered';
       ctx.body = error;
