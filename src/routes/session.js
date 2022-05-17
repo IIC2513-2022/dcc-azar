@@ -20,7 +20,6 @@ router.post('session.create', '/', async (ctx) => {
     const { username, password } = ctx.request.body;
     const user = await ctx.orm.user.findOne({ where: { username } });
     const authenticated = (user && user.password == password);
-    const admin = (user && user.role == 'admin');
     if (authenticated) {
       try{
         ctx.session.currentUserId = user.id;
