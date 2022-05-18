@@ -2,7 +2,6 @@
 const isAuthenticated = async (ctx, next) => {
     if (ctx.session.currentUserId) {
         //ctx.state.currentUser = await ctx.orm.user.findByPk(ctx.session.currentUserId);
-        console.log(ctx.state.authData);
         await next();
     } else {
         const error = 'User is not logged in';
@@ -11,5 +10,16 @@ const isAuthenticated = async (ctx, next) => {
     }
 }
 
+function generateToken(user){
+    return new Promise((resolve, reject) =>{
+        jwtgenerator.sign(
+            { sub: user.id, name:user.username, age:user.age },
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'},
+            (err, tokenResult) => (err ? reject(err) : resolve(tokenResult))
+        )
+    })
+  }
 
-module.exports = {isAuthenticated};
+
+module.exports = {isAuthenticated, generateToken};

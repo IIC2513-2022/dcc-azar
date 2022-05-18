@@ -1,19 +1,8 @@
 const KoaRouter = require('koa-router');
 const jwtgenerator = require('jsonwebtoken');
+const {generateToken} = require('../middlewares/auth');
 
 const router = new KoaRouter();
-
-function generateToken(user){
-  return new Promise((resolve, reject) =>{
-      jwtgenerator.sign(
-          { sub: user.id, name:user.username, age:user.age },
-          process.env.JWT_SECRET,
-          {expiresIn: '1h'},
-          (err, tokenResult) => (err ? reject(err) : resolve(tokenResult))
-      )
-  })
-}
-
 
 // endpoint para crear la sesión, login
 router.post('session.create', '/', async (ctx) => {
