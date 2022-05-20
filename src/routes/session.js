@@ -1,5 +1,4 @@
 const KoaRouter = require('koa-router');
-const jwtgenerator = require('jsonwebtoken');
 const {generateToken} = require('../middlewares/auth');
 
 const router = new KoaRouter();

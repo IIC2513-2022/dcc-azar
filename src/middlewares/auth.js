@@ -1,3 +1,5 @@
+const jwtgenerator = require('jsonwebtoken');
+
 // funcion para validar validez de cookie
 const isAuthenticated = async (ctx, next) => {
     if (ctx.session.currentUserId) {
