@@ -1,5 +1,9 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
+
+const PASSWORD_SALT_ROUNDS = 10;
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const usersArray = [];
@@ -8,7 +12,7 @@ module.exports = {
       lastName: 'Doe',
       username: 'johndoe',
       age: 25,
-      password: 'azar',
+      password: bcrypt.hashSync('azar', PASSWORD_SALT_ROUNDS),
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
@@ -16,7 +20,7 @@ module.exports = {
       lastName: 'Doe',
       username: 'janedoe',
       age: 25,
-      password: 'azar',
+      password: bcrypt.hashSync('azar', PASSWORD_SALT_ROUNDS),
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
@@ -24,7 +28,7 @@ module.exports = {
       lastName: 'Doe',
       username: 'jackdoe',
       age: 25,
-      password: 'azar',
+      password: bcrypt.hashSync('azar', PASSWORD_SALT_ROUNDS),
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
@@ -32,7 +36,7 @@ module.exports = {
       lastName: 'Doe',
       username: 'jilldoe',
       age: 25,
-      password: 'azar',
+      password: bcrypt.hashSync('azar', PASSWORD_SALT_ROUNDS),
       createdAt: new Date(),
       updatedAt: new Date(),
     });
