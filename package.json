@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@koa/cors": "^3.3.0",
+    "bcrypt": "^5.0.1",
     "core-js": "^3.6.5",
     "dotenv": "^16.0.0",
     "jsonwebtoken": "^8.5.1",
