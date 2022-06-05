@@ -11,14 +11,13 @@ describe('GET /hello', () => {
     expect(response.text).toMatchSnapshot();
   });
 });
-
+/*
 describe('POST /hello', () => {
   test('responds correctly', async () => {
     const response = await request.post('/hello');
     expect(response.status).toBe(302);
   });
 });
-
 describe('GET /hello/:name', () => {
   test('responds correctly', async () => {
     const response = await request.get('/hello/my-name');
@@ -27,3 +26,4 @@ describe('GET /hello/:name', () => {
     expect(response.body).toEqual({ message: 'Hello my-name!' });
   });
 });
+*/
