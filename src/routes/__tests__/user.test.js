@@ -3,8 +3,6 @@ const app = require('../../app');
 const request = supertest(app.callback());
 const db = require('../../models');
 
-const {generateToken} = require('../../middlewares/auth');
-
 beforeAll(async () => {
   await app.context.orm.sequelize.authenticate();
 });
