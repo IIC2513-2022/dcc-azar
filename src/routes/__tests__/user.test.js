@@ -62,6 +62,7 @@ describe('User API routes', () => {
       it('should have status 201', async () => {
         expect(response.status).toBe(201);
       });
+      // Separados para mayor granularidad
       it('should have created a user', async () => {
         const countUser = await app.context.orm.user.count();
         expect(countUser).toBe(countInitialUsers + 1);
@@ -77,35 +78,7 @@ describe('User API routes', () => {
       });
     });
 
-    describe('Fails to create user', () => {
-      // No lastName
-      const userData = {
-        firstName: 'Koa',
-        username: 'KoaUser',
-        password: 'IIC2513',
-      };
-
-      beforeAll(async () => {
-        response = await createUser(userData);
-      });
-      
-      it('should have status 2400', async () => {
-        expect(response.status).toBe(400);
-      });
-      it('should have created a user', async () => {
-        const countUser = await app.context.orm.user.count();
-        expect(countUser).toBe(countInitialUsers);
-        // Buscamos que no exista el usuario
-        const newUser = await app.context.orm.user.findOne({
-          where: {
-            username: 'KoaUser',
-          },
-        });
-        expect(newUser).toBe(null);
-      });
-    });
-
-    describe('Fails to create user', () => {
+    describe('Fails to create user when a param is missing', () => {
       // No lastName
       const userData = {
         firstName: 'Koa',
@@ -117,10 +90,8 @@ describe('User API routes', () => {
         response = await createUser(userData);
       });
 
-      it('should have status 200', async () => {
+      it('should not have created a user', async () => {
         expect(response.status).toBe(400);
-      });
-      it('should have created a user', async () => {
         const countUser = await app.context.orm.user.count();
         expect(countUser).toBe(countInitialUsers);
         // Buscamos que no exista el usuario
@@ -144,10 +115,9 @@ describe('User API routes', () => {
         response = await getUser(userId, cookie);
       });
 
-      it('should have status 200', async () => {
+      it('should have returned user correctly', async () => {
         expect(response.status).toBe(200);
-      });
-      it('should have returned a user', async () => {
+        // Verificamos un solo parametro
         expect(response.body.id).toBe(userId);
       });
     });
@@ -173,10 +143,8 @@ describe('User API routes', () => {
         response = await deleteUser(userDeleteId, '');
       });
 
-      it('should have status 401', async () => {
+      it('should not have status deleted user', async () => {
         expect(response.status).toBe(401);
-      });
-      it('should not have deleted user', async () => {
         const deletedUser = await app.context.orm.user.findByPk(userDeleteId);
         expect(deletedUser).not.toBe(undefined);
       });
@@ -187,10 +155,8 @@ describe('User API routes', () => {
         response = await deleteUser(userDeleteId, cookie);
       });
       
-      it('should have status 200', async () => {
+      it('should have status 200 and removed user from DB', async () => {
         expect(response.status).toBe(200);
-      });
-      it('check if user does not exist', async () => {
         const deletedUser = await app.context.orm.user.findByPk(userDeleteId);
         expect(deletedUser).toBe(null);
       });
