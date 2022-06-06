@@ -13,8 +13,8 @@
     "heroku-postbuild": "yarn run build-assets && sequelize db:migrate",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
-    "migrate:reset": "npx sequelize-cli db:drop && npm run setup_test_db",
-    "setup_test_db": "npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path src/test_seeder"
+    "migrate:reset": "yarn sequelize-cli db:drop && npm run setup_test_db",
+    "setup_test_db": "yarn sequelize-cli db:create && yarn sequelize-cli db:migrate && yarn sequelize-cli db:seed:all --seeders-path src/test_seeder"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
