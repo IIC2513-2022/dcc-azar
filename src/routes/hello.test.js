@@ -24,4 +24,3 @@ describe('GET /hello/:name', () => {
     expect(response.status).toBe(404);
   });
 });
-

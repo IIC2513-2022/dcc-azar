@@ -1,2 +1,2 @@
-const btnGET = document.querySelector("#botonGET");
+const btnGET = document.querySelector('#botonGET');
 console.log(btnGET);

@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 const app = require('../../app');
+
 const request = supertest(app.callback());
-const db = require('../../models');
 
 beforeAll(async () => {
   await app.context.orm.sequelize.authenticate();
@@ -23,21 +23,21 @@ describe('User API routes', () => {
     const userTest = await app.context.orm.user.findOne({
       where: {
         username: 'GFreeman',
-      }
+      },
     });
     userId = userTest.id;
     // logeamos al usuario
     const authResponse = await request
       .post('/session')
-      .send({username: 'GFreeman', password: 'DCCazar1!'});
-    
+      .send({ username: 'GFreeman', password: 'DCCazar1!' });
+
     cookie = authResponse.headers['set-cookie'];
 
     // Obtenemos el user a eliminar
     const userDelete = await app.context.orm.user.findOne({
       where: {
         username: 'DeleteUser',
-      }
+      },
     });
     userDeleteId = userDelete.id;
   });
@@ -106,9 +106,9 @@ describe('User API routes', () => {
   });
 
   describe('Get /user/:id', () => {
-    const getUser = async (id, cookie) => request
+    const getUser = async (id, Cookie) => request
       .get(`/users/${id}`)
-      .set('Cookie', cookie);
+      .set('Cookie', Cookie);
 
     describe('Obtain a user correctly', () => {
       beforeAll(async () => {
@@ -134,9 +134,9 @@ describe('User API routes', () => {
   });
 
   describe('DELETE /user/:id', () => {
-    const deleteUser = async (id, cookie) => request
+    const deleteUser = async (id, Cookie) => request
       .delete(`/users/${id}`)
-      .set('Cookie', cookie);
+      .set('Cookie', Cookie);
 
     describe('Fails when no token is given', () => {
       beforeAll(async () => {
@@ -154,7 +154,7 @@ describe('User API routes', () => {
       beforeAll(async () => {
         response = await deleteUser(userDeleteId, cookie);
       });
-      
+
       it('should have status 200 and removed user from DB', async () => {
         expect(response.status).toBe(200);
         const deletedUser = await app.context.orm.user.findByPk(userDeleteId);

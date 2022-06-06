@@ -1,5 +1,3 @@
-'use strict';
-
 const bcrypt = require('bcrypt');
 
 const PASSWORD_SALT_ROUNDS = 10;
@@ -38,7 +36,5 @@ module.exports = {
     return queryInterface.bulkInsert('users', usersArray);
   },
 
-  down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('users', usersArray);
-  },
+  down: async (queryInterface, Sequelize) => queryInterface.bulkDelete('users', usersArray),
 };
