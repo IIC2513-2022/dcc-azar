@@ -14,7 +14,7 @@ const config = {
   },
   test: {
     extend: 'default',
-    database: 'iic2513template_test',
+    database: process.env.DB_TEST_NAME || 'iic2513template_test',
   },
   production: {
     extend: 'default',

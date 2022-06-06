@@ -1,5 +1,3 @@
-'use strict';
-
 const bcrypt = require('bcrypt');
 
 const PASSWORD_SALT_ROUNDS = 10;
